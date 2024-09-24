@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label text="ユーザー設定" display-tooltip-when-elided="true" />
+    <ui:TextField picking-mode="Ignore" label="ユーザー名" name="api-username" />
+    <ui:TextField picking-mode="Ignore" label="パスワード" name="api-password" password="true" />
+    <ui:Button text="保存" display-tooltip-when-elided="true" name="save-button" style="height: 40px;" />
+    <ui:Label text="Immersal SDK インポート" display-tooltip-when-elided="true" />
+    <ui:Label text="Immersal SDK をインポートします。&#10;Toranomon SDK を初めて使うときに一度だけ行います。" display-tooltip-when-elided="true" />
+    <ui:Button text="Immersal SDK のインポート..." display-tooltip-when-elided="true" name="download-immersal" style="height: 40px;" />
+    <ui:Label text="シーン作成" display-tooltip-when-elided="true" />
+    <ui:Label text="コンテンツシーンを新しく作成します。&#10;Assets/&lt;プロジェクト名&gt;/Scenes にシーンが作成されます。" display-tooltip-when-elided="true" />
+    <ui:TextField picking-mode="Ignore" label="プロジェクト名" name="new-proj-name" />
+    <ui:Button text="シーンを作成" display-tooltip-when-elided="true" name="create-scenes" style="height: 40px;" />
+</ui:UXML>

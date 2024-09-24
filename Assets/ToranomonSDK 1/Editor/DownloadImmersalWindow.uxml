@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label name="status-label" />
+    <ui:TextField picking-mode="Ignore" label="Immersal Developer Token" name="immersal-token" />
+    <ui:Button text="インポート" display-tooltip-when-elided="true" name="download-button" style="height: 40px;" />
+</ui:UXML>

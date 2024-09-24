@@ -1,0 +1,3 @@
+<linker>
+  <assembly fullname="AWSSDK.Core" preserve="all" />
+</linker>
