@@ -94,3 +94,16 @@ nav a {
 .close:hover {
   color: var(--text-color);
 }
+
+#modal-images {
+  display: flex;
+  justify-content: space-around;
+  margin: 1em 0;
+}
+
+#modal-images img {
+  max-width: 45%;
+  height: auto;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}

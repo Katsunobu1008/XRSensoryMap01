@@ -49,12 +49,20 @@ function setupStartButton() {
   const startButton = document.getElementById('start-button');
   startButton.addEventListener('click', () => {
     console.log('Loading Unity WebGL content...');
-    unityInstance = UnityLoader.instantiate(
+    var unityInstance = UnityLoader.instantiate(
       'unity-canvas',
       'unity/Build/your_build_name.json',
-      { onProgress: UnityProgress }
+      {
+        onProgress: UnityProgress,
+      }
     );
   });
+}
+
+function UnityProgress(unityInstance, progress) {
+  if (progress === 1) {
+    console.log('Unity WebGL content loaded successfully');
+  }
 }
 
 function onUnityObjectClicked(objectData) {
@@ -71,10 +79,4 @@ function onUnityObjectClicked(objectData) {
     imagesContainer.appendChild(img);
   });
   modal.style.display = 'block';
-}
-
-function UnityProgress(unityInstance, progress) {
-  if (progress === 1) {
-    console.log('Unity WebGL content loaded successfully');
-  }
 }

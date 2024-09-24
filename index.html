@@ -28,11 +28,16 @@
         </p>
         <button id="start-button">3Dセンサリーマップを使ってみる</button>
       </section>
-      <section class="filters"></section>
+      <section class="filters">
+        <!-- フィルターボタンはJavaScriptで動的に生成します -->
+      </section>
+
+      <!-- Unity WebGLの埋め込み -->
       <section class="unity-container">
         <canvas id="unity-canvas" width="960" height="600"></canvas>
       </section>
     </main>
+
     <div id="modal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -41,9 +46,10 @@
         <p id="modal-description"></p>
       </div>
     </div>
+
     <script src="unity/Build/UnityLoader.js"></script>
-    <!-- Unityのローダーを読み込む -->
+    <!-- Unity WebGLのローダー -->
     <script src="js/main.js"></script>
-    <!-- JavaScriptを外部ファイル化 -->
+    <!-- 外部JavaScript -->
   </body>
 </html>
