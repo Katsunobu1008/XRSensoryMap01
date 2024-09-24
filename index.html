@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3Dセンサリーマップ</title>
+    <style>
+        :root {
+            --primary-bg: #F8FFF7;
+            --secondary-bg: #D1F2CE;
+            --text-color: #333;
+            --accent-color: #4CAF50;
+            --border-radius: 12px;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 80px; /* ヘッダーの高さ分だけ余白を追加 */
+        }
+        header {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .logo h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9em;
+        }
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2em;
+        }
+        .description {
+            text-align: center;
+            margin-bottom: 2em;
+            font-size: 1.1em;
+        }
+        #start-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s ease;
+        }
+        #start-button:hover {
+            background-color: #45a049;
+        }
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2em;
+        }
+        .filter-button {
+            margin: 0.5em;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            background-color: var(--secondary-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+        .filter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .filter-button.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .unity-container {
+            width: 100%;
+            height: 600px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: var(--primary-bg);
+            margin: 15% auto;
+            padding: 2em;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close:hover {
+            color: var(--text-color);
+        }
+        #modal-images {
+            display: flex;
+            justify-content: space-around;
+            margin: 1em 0;
+        }
+        #modal-images img {
+            max-width: 45%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/api/placeholder/40/40" alt="3Dセンサリーマップロゴ">
+            <h1>3Dセンサリーマップ</h1>
+        </div>
+        <nav>
+            <a href="#">会社概要</a>
+            <a href="#">お問い合わせ</a>
+        </nav>
+    </header>
+    <main>
+        <section class="description">
+            <p>3Dセンサリーマップは、様々な感覚刺激を実際の場所を3DCGにした環境内に可視化したツールです。</p>
+            <p>感覚過敏を持つ方々向けに感覚刺激情報や快適な観光をあらかじめ把握することを目的としています。</p>
+            <button id="start-button">3Dセンサリーマップを使ってみる</button>
+        </section>
+        <section class="filters">
+            <!-- フィルターボタンはJavaScriptで動的に生成します -->
+        </section>
+        <section class="unity-container">
+            <canvas id="unity-canvas" width="960" height="600"></canvas>
+        </section>
+    </main>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <div id="modal-images"></div>
+            <p id="modal-description"></p>
+        </div>
+    </div>
+    <script src="unity/Build/UnityLoader.js"></script>
+    <script>
+        // JavaScriptコードは変更なし
+        const filters = [
+            '眩しい刺激', '混雑刺激', 'におい刺激', '音刺激',
+            '休憩場所', '暗い場所', '静かな場所'
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createFilterButtons();
+            setupModalListeners();
+            setupStartButton();
+        });
+
+        function createFilterButtons() {
+            const filtersContainer = document.querySelector('.filters');
+            filters.forEach(filter => {
+                const button = document.createElement('button');
+                button.textContent = filter;
+                button.classList.add('filter-button');
+                button.addEventListener('click', () => toggleFilter(button, filter));
+                filtersContainer.appendChild(button);
+            });
+        }
+
+        function toggleFilter(button, filter) {
+            button.classList.toggle('active');
+            console.log(`Filter ${filter} is ${button.classList.contains('active') ? 'active' : 'inactive'}`);
+        }
+
+        function setupModalListeners() {
+            const modal = document.getElementById('modal');
+            const closeBtn = document.querySelector('.close');
+            closeBtn.onclick = () => modal.style.display = 'none';
+            window.onclick = (event) => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        }
+
+        function setupStartButton() {
+            const startButton = document.getElementById('start-button');
+            startButton.addEventListener('click', () => {
+                console.log('Loading Unity WebGL content...');
+            });
+        }
+
+        function onUnityObjectClicked(objectData) {
+            const modal = document.getElementById('modal');
+            document.getElementById('modal-title').textContent = objectData.title;
+            document.getElementById('modal-description').textContent = objectData.description;
+            const imagesContainer = document.getElementById('modal-images');
+            imagesContainer.innerHTML = '';
+            objectData.images.forEach(imageUrl => {
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = objectData.title;
+                imagesContainer.appendChild(img);
+            });
+            modal.style.display = 'block';
+        }
+
+        function unityWebGLLoaded() {
+            console.log('Unity WebGL content loaded successfully');
+        }
+
+        var unityInstance = UnityLoader.instantiate("unity-canvas", "unity/Build/your_build.json", {onProgress: UnityProgress});
+        function UnityProgress(unityInstance, progress) {
+            if (progress === 1) {
+                unityWebGLLoaded();
+            }
+        }
+    </script>
+</body>
+</html>
