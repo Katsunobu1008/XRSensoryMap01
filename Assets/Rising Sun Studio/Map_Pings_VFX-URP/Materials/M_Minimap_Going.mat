@@ -21,9 +21,11 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Minimap_Going
-  m_Shader: {fileID: -6465566751694194690, guid: 001cd2189b600e24fbc101e14eec628f,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 001cd2189b600e24fbc101e14eec628f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _BUILTIN_SURFACE_TYPE_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 0
@@ -35,6 +37,7 @@ Material:
   disabledShaderPasses:
   - DepthOnly
   - SHADOWCASTER
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -93,13 +96,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaToMask: 0
     - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
     - _BUILTIN_CullMode: 0
-    - _BUILTIN_DstBlend: 0
-    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_DstBlend: 10
+    - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _BUILTIN_SrcBlend: 1
+    - _BUILTIN_SrcBlend: 5
     - _BUILTIN_Surface: 1
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 0
